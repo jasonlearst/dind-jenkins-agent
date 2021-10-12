@@ -27,9 +27,8 @@ if [ "$(id -u)" = "0" ]; then
   if ! groups jenkins | grep -q docker; then
     usermod -aG docker jenkins
   fi
-  # Add call to gosu to drop from root user to jenkins user
-  # when running original entrypoint
-  set -- exec "$@"
+  # run original entrypoint
+  set -- "$@"
 fi
 
 # replace the current pid 1 with original entrypoint
