@@ -7,7 +7,7 @@
 set -x
 
 # configure script to call original entrypoint
-set -- tini -- /usr/local/bin/jenkins.sh "$@"
+set  -- setup-sshd "$@"
 
 # In Prod, this may be configured with a GID already matching the container
 # allowing the container to be run directly as Jenkins. In Dev, or on unknown
@@ -29,7 +29,7 @@ if [ "$(id -u)" = "0" ]; then
   fi
   # Add call to gosu to drop from root user to jenkins user
   # when running original entrypoint
-  set -- gosu jenkins "$@"
+  set -- exec "$@"
 fi
 
 # replace the current pid 1 with original entrypoint
